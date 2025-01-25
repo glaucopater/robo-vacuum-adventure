@@ -31,12 +31,28 @@ const Index = () => {
       toast.success("Dirt cleaned!");
     }
 
-    setGameState(prev => ({
-      ...prev,
-      robotPosition: newPosition,
-      dirtPositions: newDirtPositions,
-      score: dirtCleaned ? prev.score + 1 : prev.score
-    }));
+    setGameState(prev => {
+      const newState = {
+        ...prev,
+        robotPosition: newPosition,
+        dirtPositions: newDirtPositions,
+        score: dirtCleaned ? prev.score + 1 : prev.score
+      };
+
+      // Check if level is complete (all dirt cleaned)
+      if (newDirtPositions.length === 0) {
+        toast.success(`Level ${prev.level} completed! Starting next level...`, {
+          duration: 3000,
+        });
+        
+        // After a short delay, start the next level
+        setTimeout(() => {
+          setGameState(createInitialState(GRID_SIZE, prev.level + 1));
+        }, 2000);
+      }
+
+      return newState;
+    });
   };
 
   const handleRotate = (direction: 'left' | 'right') => {
@@ -76,7 +92,7 @@ const Index = () => {
     <div className="min-h-screen bg-gray-50 py-8 px-4">
       <div className="max-w-4xl mx-auto space-y-8">
         <h1 className="text-4xl font-bold text-center text-gray-900">
-          Vacuum Robot Simulator
+          Vacuum Robot Simulator - Level {gameState.level}
         </h1>
         
         <div className="flex flex-col items-center gap-6">
