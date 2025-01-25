@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { GameBoard } from "@/components/GameBoard";
 import { Controls } from "@/components/Controls";
 import { ScoreBoard } from "@/components/ScoreBoard";
@@ -46,6 +46,32 @@ const Index = () => {
     }));
   };
 
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      switch (event.key) {
+        case 'ArrowUp':
+        case 'w':
+          handleMove();
+          break;
+        case 'ArrowLeft':
+        case 'a':
+          handleRotate('left');
+          break;
+        case 'ArrowRight':
+        case 'd':
+          handleRotate('right');
+          break;
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    
+    // Cleanup listener on component unmount
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [gameState]); // Include gameState in dependencies since handleMove uses it
+
   return (
     <div className="min-h-screen bg-gray-50 py-8 px-4">
       <div className="max-w-4xl mx-auto space-y-8">
@@ -65,6 +91,11 @@ const Index = () => {
             onMove={handleMove}
             onRotate={handleRotate}
           />
+
+          <p className="text-sm text-gray-600 text-center">
+            Use arrow keys or WASD to control the robot:<br />
+            ↑/W: Move forward • ←/A: Rotate left • →/D: Rotate right
+          </p>
         </div>
       </div>
     </div>
