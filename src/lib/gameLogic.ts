@@ -13,6 +13,9 @@ export type GameState = {
   score: number;
   gridSize: number;
   level: number;
+  battery: number;
+  solarPanelActive: boolean;
+  sunPosition: number; // 0 to gridSize-1, represents sun's position from left to right
 };
 
 const generateLevel = (level: number, gridSize: number): Pick<GameState, 'dirtPositions' | 'obstacles'> => {
@@ -63,6 +66,9 @@ export const createInitialState = (gridSize: number, level: number = 1): GameSta
     score: 0,
     gridSize,
     level,
+    battery: 100,
+    solarPanelActive: false,
+    sunPosition: 0
   };
 };
 
@@ -101,4 +107,15 @@ export const checkCollision = (position: Position, obstacles: Position[]): boole
 
 export const cleanDirt = (position: Position, dirtPositions: Position[]): Position[] => {
   return dirtPositions.filter(dirt => !(dirt.x === position.x && dirt.y === position.y));
+};
+
+export const updateBattery = (currentBattery: number, amount: number): number => {
+  return Math.min(Math.max(currentBattery + amount, 0), 100);
+};
+
+export const isSunlitPosition = (position: Position, sunPosition: number, gridSize: number): boolean => {
+  // Consider the top row (y=0) as the sunny area
+  // The sun affects a 3-cell wide area
+  return position.y === 0 && 
+         Math.abs(position.x - sunPosition) <= 1;
 };

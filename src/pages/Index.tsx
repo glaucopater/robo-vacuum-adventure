@@ -2,15 +2,31 @@ import { useState, useEffect } from "react";
 import { GameBoard } from "@/components/GameBoard";
 import { Controls } from "@/components/Controls";
 import { ScoreBoard } from "@/components/ScoreBoard";
-import { createInitialState, moveForward, rotateRobot, checkCollision, cleanDirt } from "@/lib/gameLogic";
+import { 
+  createInitialState, 
+  moveForward, 
+  rotateRobot, 
+  checkCollision, 
+  cleanDirt,
+  updateBattery,
+  isSunlitPosition
+} from "@/lib/gameLogic";
 import { toast } from "sonner";
 
 const GRID_SIZE = 8;
+const BATTERY_MOVE_COST = 5;
+const BATTERY_CHARGE_RATE = 10;
+const SUN_MOVE_INTERVAL = 3000; // Sun moves every 3 seconds
 
 const Index = () => {
   const [gameState, setGameState] = useState(createInitialState(GRID_SIZE));
 
   const handleMove = () => {
+    if (gameState.battery <= 0) {
+      toast.error("Battery depleted! Move to a sunny spot to recharge!");
+      return;
+    }
+
     const newPosition = moveForward(gameState.robotPosition, gameState.robotDirection, GRID_SIZE);
     
     if (!newPosition) {
@@ -36,16 +52,15 @@ const Index = () => {
         ...prev,
         robotPosition: newPosition,
         dirtPositions: newDirtPositions,
-        score: dirtCleaned ? prev.score + 1 : prev.score
+        score: dirtCleaned ? prev.score + 1 : prev.score,
+        battery: updateBattery(prev.battery, -BATTERY_MOVE_COST)
       };
 
-      // Check if level is complete (all dirt cleaned)
       if (newDirtPositions.length === 0) {
         toast.success(`Level ${prev.level} completed! Starting next level...`, {
           duration: 3000,
         });
         
-        // After a short delay, start the next level
         setTimeout(() => {
           setGameState(createInitialState(GRID_SIZE, prev.level + 1));
         }, 2000);
@@ -61,6 +76,37 @@ const Index = () => {
       robotDirection: rotateRobot(prev.robotDirection, direction)
     }));
   };
+
+  // Handle sun movement and battery charging
+  useEffect(() => {
+    const sunInterval = setInterval(() => {
+      setGameState(prev => ({
+        ...prev,
+        sunPosition: (prev.sunPosition + 1) % prev.gridSize
+      }));
+    }, SUN_MOVE_INTERVAL);
+
+    const chargeInterval = setInterval(() => {
+      setGameState(prev => {
+        if (isSunlitPosition(prev.robotPosition, prev.sunPosition, prev.gridSize)) {
+          const newBattery = updateBattery(prev.battery, BATTERY_CHARGE_RATE);
+          if (prev.battery < 100 && newBattery > prev.battery) {
+            toast.success("Charging battery...", { id: 'charging' });
+          }
+          return {
+            ...prev,
+            battery: newBattery
+          };
+        }
+        return prev;
+      });
+    }, 1000);
+
+    return () => {
+      clearInterval(sunInterval);
+      clearInterval(chargeInterval);
+    };
+  }, []);
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -81,12 +127,10 @@ const Index = () => {
     };
 
     window.addEventListener('keydown', handleKeyDown);
-    
-    // Cleanup listener on component unmount
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
     };
-  }, [gameState]); // Include gameState in dependencies since handleMove uses it
+  }, [gameState]);
 
   return (
     <div className="min-h-screen bg-gray-50 py-8 px-4">
@@ -110,7 +154,8 @@ const Index = () => {
 
           <p className="text-sm text-gray-600 text-center">
             Use arrow keys or WASD to control the robot:<br />
-            ↑/W: Move forward • ←/A: Rotate left • →/D: Rotate right
+            ↑/W: Move forward • ←/A: Rotate left • →/D: Rotate right<br />
+            Move to sunny spots (yellow tiles) to recharge the battery!
           </p>
         </div>
       </div>
