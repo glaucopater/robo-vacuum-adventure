@@ -14,7 +14,7 @@ import {
 import { toast } from "sonner";
 
 const GRID_SIZE = 8;
-const BATTERY_MOVE_COST = 5;
+const BATTERY_MOVE_COST = 3; // Reduced from 5 to 3
 const BATTERY_CHARGE_RATE = 10;
 const SUN_MOVE_INTERVAL = 3000; // Sun moves every 3 seconds
 
