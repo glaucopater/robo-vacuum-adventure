@@ -68,7 +68,7 @@ export const GameBoard = ({ gameState, showPanorama = false }: GameBoardProps) =
         </div>
       </div>
 
-      <div className="aspect-square w-full max-w-2xl">
+      <div className="aspect-square w-full max-w-3xl mx-auto"> {/* Increased max-width from 2xl to 3xl */}
         <div className="grid gap-1" style={{ 
           gridTemplateColumns: `repeat(${gridSize}, 1fr)`,
           gridTemplateRows: `repeat(${gridSize}, 1fr)`

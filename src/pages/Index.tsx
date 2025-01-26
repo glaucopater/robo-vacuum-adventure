@@ -13,7 +13,7 @@ import {
 } from "@/lib/gameLogic";
 import { toast } from "sonner";
 
-const GRID_SIZE = 8;
+const GRID_SIZE = 10; // Increased from 8 to 10
 const BATTERY_MOVE_COST = 3;
 const BATTERY_CHARGE_RATE = 10;
 const SUN_MOVE_INTERVAL = 3000;
