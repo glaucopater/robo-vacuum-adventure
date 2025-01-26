@@ -15,7 +15,8 @@ export type GameState = {
   level: number;
   battery: number;
   solarPanelActive: boolean;
-  sunPosition: number; // 0 to gridSize-1, represents sun's position from left to right
+  sunPosition: number;
+  path: Position[]; // Added to track robot's path
 };
 
 const generateLevel = (level: number, gridSize: number): Pick<GameState, 'dirtPositions' | 'obstacles'> => {
@@ -68,7 +69,8 @@ export const createInitialState = (gridSize: number, level: number = 1): GameSta
     level,
     battery: 100,
     solarPanelActive: false,
-    sunPosition: 0
+    sunPosition: 0,
+    path: [{ x: 0, y: 0 }] // Initialize path with starting position
   };
 };
 

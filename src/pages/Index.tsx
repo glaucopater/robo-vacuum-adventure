@@ -14,12 +14,13 @@ import {
 import { toast } from "sonner";
 
 const GRID_SIZE = 8;
-const BATTERY_MOVE_COST = 3; // Reduced from 5 to 3
+const BATTERY_MOVE_COST = 3;
 const BATTERY_CHARGE_RATE = 10;
-const SUN_MOVE_INTERVAL = 3000; // Sun moves every 3 seconds
+const SUN_MOVE_INTERVAL = 3000;
 
 const Index = () => {
   const [gameState, setGameState] = useState(createInitialState(GRID_SIZE));
+  const [showingPanorama, setShowingPanorama] = useState(false);
 
   const handleMove = () => {
     if (gameState.battery <= 0) {
@@ -53,7 +54,8 @@ const Index = () => {
         robotPosition: newPosition,
         dirtPositions: newDirtPositions,
         score: dirtCleaned ? prev.score + 1 : prev.score,
-        battery: updateBattery(prev.battery, -BATTERY_MOVE_COST)
+        battery: updateBattery(prev.battery, -BATTERY_MOVE_COST),
+        path: [...prev.path, newPosition]
       };
 
       if (newDirtPositions.length === 0) {
@@ -61,9 +63,11 @@ const Index = () => {
           duration: 3000,
         });
         
+        setShowingPanorama(true);
         setTimeout(() => {
+          setShowingPanorama(false);
           setGameState(createInitialState(GRID_SIZE, prev.level + 1));
-        }, 2000);
+        }, 3000);
       }
 
       return newState;
@@ -145,7 +149,7 @@ const Index = () => {
             remainingDirt={gameState.dirtPositions.length}
           />
           
-          <GameBoard gameState={gameState} />
+          <GameBoard gameState={gameState} showPanorama={showingPanorama} />
           
           <Controls
             onMove={handleMove}
