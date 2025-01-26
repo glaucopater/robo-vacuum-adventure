@@ -68,7 +68,7 @@ export const GameBoard = ({ gameState, showPanorama = false }: GameBoardProps) =
         </div>
       </div>
 
-      <div className="aspect-square w-full max-w-4xl mx-auto"> {/* Increased max-width from 3xl to 4xl and added container class */}
+      <div className="aspect-square w-full max-w-4xl mx-auto">
         <div className="grid gap-1" style={{ 
           gridTemplateColumns: `repeat(${gridSize}, 1fr)`,
           gridTemplateRows: `repeat(${gridSize}, 1fr)`
@@ -84,7 +84,7 @@ export const GameBoard = ({ gameState, showPanorama = false }: GameBoardProps) =
                 className={`
                   aspect-square rounded-sm relative
                   ${isObstacleHere(x, y) ? 'bg-gray-400' : 'bg-gray-100'}
-                  ${isDirtHere(x, y) ? 'dirt bg-yellow-200' : ''}
+                  ${isDirtHere(x, y) ? 'dirt bg-[#8B4513]' : ''} 
                   ${isSunHere(x, y) ? 'bg-yellow-100' : ''}
                 `}
                 style={{

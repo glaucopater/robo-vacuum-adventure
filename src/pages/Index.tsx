@@ -12,6 +12,8 @@ import {
   isSunlitPosition
 } from "@/lib/gameLogic";
 import { toast } from "sonner";
+import { GameConfig, DEFAULT_CONFIG } from "@/types/config";
+import { Button } from "@/components/ui/button";
 
 const GRID_SIZE = 10; // Increased from 8 to 10
 const BATTERY_MOVE_COST = 3;
@@ -19,7 +21,12 @@ const BATTERY_CHARGE_RATE = 10;
 const SUN_MOVE_INTERVAL = 3000;
 
 const Index = () => {
-  const [gameState, setGameState] = useState(createInitialState(GRID_SIZE));
+  const [gameState, setGameState] = useState(() => {
+    const savedConfig = localStorage.getItem('gameConfig');
+    const config = savedConfig ? JSON.parse(savedConfig) : DEFAULT_CONFIG;
+    const savedLevel = config.lastLevel || 1;
+    return createInitialState(config.gridSize, savedLevel);
+  });
   const [showingPanorama, setShowingPanorama] = useState(false);
 
   const handleMove = () => {
@@ -28,7 +35,7 @@ const Index = () => {
       return;
     }
 
-    const newPosition = moveForward(gameState.robotPosition, gameState.robotDirection, GRID_SIZE);
+    const newPosition = moveForward(gameState.robotPosition, gameState.robotDirection, gameState.gridSize);
     
     if (!newPosition) {
       toast.error("Can't move there!");
@@ -58,6 +65,13 @@ const Index = () => {
         path: [...prev.path, newPosition]
       };
 
+      // Save progress
+      const savedConfig = localStorage.getItem('gameConfig');
+      const config = savedConfig ? JSON.parse(savedConfig) : DEFAULT_CONFIG;
+      config.lastLevel = prev.level;
+      config.lastScore = newState.score;
+      localStorage.setItem('gameConfig', JSON.stringify(config));
+
       if (newDirtPositions.length === 0) {
         toast.success(`Level ${prev.level} completed! Starting next level...`, {
           duration: 3000,
@@ -66,7 +80,7 @@ const Index = () => {
         setShowingPanorama(true);
         setTimeout(() => {
           setShowingPanorama(false);
-          setGameState(createInitialState(GRID_SIZE, prev.level + 1));
+          setGameState(createInitialState(config.gridSize, prev.level + 1));
         }, 3000);
       }
 
@@ -139,9 +153,14 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-gray-50 py-8 px-4">
       <div className="max-w-4xl mx-auto space-y-8">
-        <h1 className="text-4xl font-bold text-center text-gray-900">
-          Vacuum Robot Simulator - Level {gameState.level}
-        </h1>
+        <div className="flex justify-between items-center">
+          <h1 className="text-4xl font-bold text-center text-gray-900">
+            Vacuum Robot Simulator - Level {gameState.level}
+          </h1>
+          <Button variant="outline" onClick={() => window.location.href = '/config'}>
+            Configure
+          </Button>
+        </div>
         
         <div className="flex flex-col items-center gap-6">
           <ScoreBoard 
