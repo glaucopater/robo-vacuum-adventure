@@ -57,7 +57,7 @@ export const GameBoard = ({ gameState, showPanorama = false }: GameBoardProps) =
   }
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 container px-4 sm:px-6 lg:px-8">
       <div className="flex items-center gap-2 justify-center">
         <Battery className="w-6 h-6" />
         <div className="w-32 h-4 bg-gray-200 rounded-full overflow-hidden">
@@ -68,7 +68,7 @@ export const GameBoard = ({ gameState, showPanorama = false }: GameBoardProps) =
         </div>
       </div>
 
-      <div className="aspect-square w-full max-w-3xl mx-auto"> {/* Increased max-width from 2xl to 3xl */}
+      <div className="aspect-square w-full max-w-4xl mx-auto"> {/* Increased max-width from 3xl to 4xl and added container class */}
         <div className="grid gap-1" style={{ 
           gridTemplateColumns: `repeat(${gridSize}, 1fr)`,
           gridTemplateRows: `repeat(${gridSize}, 1fr)`
