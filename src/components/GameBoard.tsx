@@ -1,7 +1,8 @@
 import { Position, GameState } from "@/lib/gameLogic";
 import { Robot } from "./Robot";
 import { Battery } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { DEFAULT_CONFIG } from "@/types/config";
 
 interface GameBoardProps {
   gameState: GameState;
@@ -21,6 +22,15 @@ export const GameBoard = ({ gameState, showPanorama = false }: GameBoardProps) =
   const [panoramaImage] = useState(() => 
     UNSPLASH_IMAGES[Math.floor(Math.random() * UNSPLASH_IMAGES.length)]
   );
+  const [tileSize, setTileSize] = useState(DEFAULT_CONFIG.tileSize);
+
+  useEffect(() => {
+    const savedConfig = localStorage.getItem('gameConfig');
+    if (savedConfig) {
+      const config = JSON.parse(savedConfig);
+      setTileSize(config.tileSize || DEFAULT_CONFIG.tileSize);
+    }
+  }, []);
 
   const isRobotHere = (x: number, y: number) => 
     robotPosition.x === x && robotPosition.y === y;
@@ -43,18 +53,6 @@ export const GameBoard = ({ gameState, showPanorama = false }: GameBoardProps) =
     const percentage = (index / path.length) * 100;
     return `linear-gradient(90deg, hsla(139, 70%, 75%, ${percentage}%), hsla(63, 90%, 76%, ${percentage}%))`;
   };
-
-  if (showPanorama) {
-    return (
-      <div className="w-full aspect-square rounded-lg overflow-hidden transition-all duration-500 animate-fade-in">
-        <img 
-          src={`https://source.unsplash.com/${panoramaImage}`}
-          alt="Level completion panorama"
-          className="w-full h-full object-cover"
-        />
-      </div>
-    );
-  }
 
   return (
     <div className="space-y-4 container px-4 sm:px-6 lg:px-8">
@@ -88,12 +86,23 @@ export const GameBoard = ({ gameState, showPanorama = false }: GameBoardProps) =
                   ${isSunHere(x, y) ? 'bg-yellow-100' : ''}
                 `}
                 style={{
-                  background: pathIndex !== -1 ? getPathStyle(pathIndex) : undefined
+                  background: pathIndex !== -1 ? getPathStyle(pathIndex) : undefined,
+                  width: `${tileSize}px`,
+                  height: `${tileSize}px`
                 }}
               >
                 {isRobotHere(x, y) && (
                   <div className="absolute inset-1">
                     <Robot direction={robotDirection} />
+                  </div>
+                )}
+                {showPanorama && (
+                  <div className="absolute inset-0 bg-black bg-opacity-50 transition-all duration-500">
+                    <img 
+                      src={`https://source.unsplash.com/${panoramaImage}`}
+                      alt="Level completion panorama"
+                      className="w-full h-full object-cover opacity-50"
+                    />
                   </div>
                 )}
               </div>

@@ -84,6 +84,19 @@ const Config = () => {
               )}
             />
 
+            <FormField
+              control={form.control}
+              name="tileSize"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Tile Size (pixels)</FormLabel>
+                  <FormControl>
+                    <Input type="number" {...field} onChange={e => field.onChange(Number(e.target.value))} />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+
             <Button type="submit" className="w-full">Save Configuration</Button>
           </form>
         </Form>
