@@ -1,4 +1,4 @@
-import { Position } from "@/lib/gameLogic";
+import { Position, Direction } from "@/lib/gameLogic";
 import { Robot } from "../Robot";
 
 interface GameCellProps {
@@ -8,7 +8,7 @@ interface GameCellProps {
   isDirt: boolean;
   isObstacle: boolean;
   isSun: boolean;
-  robotDirection: string;
+  robotDirection: Direction;  // Changed from string to Direction type
   pathStyle?: string;
   showPanorama?: boolean;
   panoramaImage?: string;
