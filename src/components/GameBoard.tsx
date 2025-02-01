@@ -67,10 +67,13 @@ export const GameBoard = ({ gameState, showPanorama = false }: GameBoardProps) =
       </div>
 
       <div className="aspect-square w-full max-w-4xl mx-auto">
-        <div className="grid gap-0" style={{ 
-          gridTemplateColumns: `repeat(${gridSize}, 1fr)`,
-          gridTemplateRows: `repeat(${gridSize}, 1fr)`
-        }}>
+        <div 
+          className="grid" 
+          style={{ 
+            gridTemplateColumns: `repeat(${gridSize}, 1fr)`,
+            gridTemplateRows: `repeat(${gridSize}, 1fr)`,
+          }}
+        >
           {Array.from({ length: gridSize * gridSize }).map((_, index) => {
             const x = index % gridSize;
             const y = Math.floor(index / gridSize);
@@ -82,7 +85,7 @@ export const GameBoard = ({ gameState, showPanorama = false }: GameBoardProps) =
                 className={`
                   aspect-square relative border border-gray-200
                   ${isObstacleHere(x, y) ? 'bg-gray-400' : 'bg-gray-100'}
-                  ${isDirtHere(x, y) ? 'dirt bg-[#8B4513]' : ''} 
+                  ${isDirtHere(x, y) ? 'bg-[#8B4513]' : ''} 
                   ${isSunHere(x, y) ? 'bg-yellow-100' : ''}
                 `}
                 style={{
