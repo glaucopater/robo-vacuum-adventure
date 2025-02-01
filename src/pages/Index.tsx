@@ -14,8 +14,9 @@ import {
 import { toast } from "sonner";
 import { GameConfig, DEFAULT_CONFIG } from "@/types/config";
 import { Button } from "@/components/ui/button";
+import { RotateCcw } from "lucide-react";
 
-const GRID_SIZE = 10; // Increased from 8 to 10
+const GRID_SIZE = 10;
 const BATTERY_MOVE_COST = 3;
 const BATTERY_CHARGE_RATE = 10;
 const SUN_MOVE_INTERVAL = 3000;
@@ -28,6 +29,16 @@ const Index = () => {
     return createInitialState(config.gridSize, savedLevel);
   });
   const [showingPanorama, setShowingPanorama] = useState(false);
+
+  const handleRestart = () => {
+    const savedConfig = localStorage.getItem('gameConfig');
+    const config = savedConfig ? JSON.parse(savedConfig) : DEFAULT_CONFIG;
+    config.lastLevel = 1;
+    config.lastScore = 0;
+    localStorage.setItem('gameConfig', JSON.stringify(config));
+    setGameState(createInitialState(config.gridSize, 1));
+    toast.success("Game restarted! Starting from level 1");
+  };
 
   const handleMove = () => {
     if (gameState.battery <= 0) {
@@ -157,9 +168,15 @@ const Index = () => {
           <h1 className="text-4xl font-bold text-center text-gray-900">
             Vacuum Robot Simulator - Level {gameState.level}
           </h1>
-          <Button variant="outline" onClick={() => window.location.href = '/config'}>
-            Configure
-          </Button>
+          <div className="flex gap-2">
+            <Button variant="outline" onClick={handleRestart}>
+              <RotateCcw className="mr-2 h-4 w-4" />
+              Restart Game
+            </Button>
+            <Button variant="outline" onClick={() => window.location.href = '/config'}>
+              Configure
+            </Button>
+          </div>
         </div>
         
         <div className="flex flex-col items-center gap-6">
