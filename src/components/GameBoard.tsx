@@ -11,7 +11,7 @@ interface GameBoardProps {
 
 const UNSPLASH_IMAGES = [
   'photo-1472396961693-142e6e269027',
-  'photo-1482938289607-e9573fc25ebb',
+  'photo-1482938289607-e9573fc25850',
   'photo-1509316975850-ff9c5deb0cd9',
   'photo-1469474968028-56623f02e42e',
   'photo-1470071459604-3b5ec3a7fe05'
@@ -68,10 +68,11 @@ export const GameBoard = ({ gameState, showPanorama = false }: GameBoardProps) =
 
       <div className="aspect-square w-full max-w-4xl mx-auto">
         <div 
-          className="grid" 
+          className="grid grid-flow-row" 
           style={{ 
             gridTemplateColumns: `repeat(${gridSize}, 1fr)`,
             gridTemplateRows: `repeat(${gridSize}, 1fr)`,
+            gap: 0
           }}
         >
           {Array.from({ length: gridSize * gridSize }).map((_, index) => {
