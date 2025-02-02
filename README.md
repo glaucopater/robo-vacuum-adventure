@@ -3,6 +3,10 @@
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/ea9084c0-aaef-4b05-97df-48647ae74f64/deploy-status)](https://app.netlify.com/sites/robo-vacuum-adventure/deploys)
 
+Live Demo 🤖
+
+https://robo-vacuum-adventure.netlify.app/
+
 [![Live Demo](/public/demo.png)](https://robo-vacuum-adventure.netlify.app/)
 
 
