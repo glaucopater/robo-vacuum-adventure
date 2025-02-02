@@ -162,8 +162,8 @@ const Index = () => {
   }, [gameState]);
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8 px-4">
-      <div className="max-w-4xl mx-auto space-y-8">
+    <div className="min-h-[600px] bg-gray-50 py-4 px-4">
+      <div className="max-w-3xl mx-auto space-y-4">
         <div className="flex justify-between items-center">
           <h1 className="text-4xl font-bold text-center text-gray-900">
             Vacuum Robot Simulator - Level {gameState.level}
@@ -179,7 +179,7 @@ const Index = () => {
           </div>
         </div>
         
-        <div className="flex flex-col items-center gap-6">
+        <div className="flex flex-col items-center gap-4">
           <ScoreBoard 
             score={gameState.score}
             remainingDirt={gameState.dirtPositions.length}

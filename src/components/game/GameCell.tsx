@@ -8,7 +8,7 @@ interface GameCellProps {
   isDirt: boolean;
   isObstacle: boolean;
   isSun: boolean;
-  robotDirection: Direction;  // Changed from string to Direction type
+  robotDirection: Direction;
   pathStyle?: string;
   showPanorama?: boolean;
   panoramaImage?: string;
@@ -34,11 +34,11 @@ export const GameCell = ({
       className={`
         aspect-square relative border border-gray-200
         ${isObstacle ? 'bg-gray-400' : 'bg-gray-100'}
-        ${isDirt ? 'bg-[#8B4513]' : ''} 
+        ${isDirt ? 'bg-brown-500 dirt' : ''} 
         ${isSun ? 'bg-yellow-100' : ''}
       `}
       style={{
-        background: pathStyle,
+        background: isDirt ? '#8B4513' : pathStyle, // Make dirt more visible
         width: `${tileSize}px`,
         height: `${tileSize}px`
       }}
