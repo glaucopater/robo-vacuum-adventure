@@ -5,11 +5,12 @@ import { BatteryIndicator } from "./game/BatteryIndicator";
 import { GameGrid } from "./game/GameGrid";
 
 const UNSPLASH_IMAGES = [
-  'photo-1472396961693-142e6e269027',
-  'photo-1482938289607-e9573fc25850',
-  'photo-1509316975850-ff9c5deb0cd9',
-  'photo-1469474968028-56623f02e42e',
-  'photo-1470071459604-3b5ec3a7fe05'
+  "photo-1691007751887-667bbe17b2dd",
+  "photo-1691007751887-667bbe17b2dd",
+  "photo-1691007751887-667bbe17b2dd",
+  "photo-1691007751887-667bbe17b2dd",
+  "photo-1691007751887-667bbe17b2dd",
+  "photo-1691007751887-667bbe17b2dd",
 ];
 
 interface GameBoardProps {
@@ -17,14 +18,17 @@ interface GameBoardProps {
   showPanorama?: boolean;
 }
 
-export const GameBoard = ({ gameState, showPanorama = false }: GameBoardProps) => {
-  const [panoramaImage] = useState(() => 
-    UNSPLASH_IMAGES[Math.floor(Math.random() * UNSPLASH_IMAGES.length)]
+export const GameBoard = ({
+  gameState,
+  showPanorama = false,
+}: GameBoardProps) => {
+  const [panoramaImage] = useState(
+    () => UNSPLASH_IMAGES[Math.floor(Math.random() * UNSPLASH_IMAGES.length)]
   );
   const [tileSize, setTileSize] = useState(DEFAULT_CONFIG.tileSize);
 
   useEffect(() => {
-    const savedConfig = localStorage.getItem('gameConfig');
+    const savedConfig = localStorage.getItem("gameConfig");
     if (savedConfig) {
       const config = JSON.parse(savedConfig);
       setTileSize(config.tileSize || DEFAULT_CONFIG.tileSize);
@@ -34,8 +38,17 @@ export const GameBoard = ({ gameState, showPanorama = false }: GameBoardProps) =
   return (
     <div className="space-y-4 container px-4 sm:px-6 lg:px-8">
       <BatteryIndicator battery={gameState.battery} />
-      <div className="aspect-square w-full max-w-4xl mx-auto">
-        <GameGrid 
+      <div
+        className="aspect-square w-full max-w-4xl mx-auto"
+        style={
+          {
+            display: "flex",
+            placeContent: "center",
+            placeItems: "center",
+          } as React.CSSProperties
+        }
+      >
+        <GameGrid
           gameState={gameState}
           showPanorama={showPanorama}
           panoramaImage={panoramaImage}

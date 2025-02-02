@@ -1,69 +1,39 @@
-# Welcome to your Lovable project
+# Robo-Vacuum Adventure
 
-## Project info
+## Project Purpose
 
-**URL**: https://lovable.dev/projects/7090467c-7254-4ab6-a833-46961a48163c
+This project aims to create a interactive game where a robot vacuum cleaner navigates through a virtual environment, avoiding obstacles and collecting virtual dust particles. The game will be built using React, TypeScript, and Vite, with a focus on creating a engaging and challenging user experience.
 
-## How can I edit this code?
+## Game Overview
 
-There are several ways of editing your application.
+* Players control the robot vacuum cleaner using keyboard or touchscreen inputs
+* The game features increasingly difficult levels with obstacles, narrow pathways, and hidden dust particles
+* Players earn points for collecting dust particles and completing levels quickly
+* The game includes a leaderboard to track player progress and compete with others
 
-**Use Lovable**
+## Technical Requirements
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/7090467c-7254-4ab6-a833-46961a48163c) and start prompting.
+* Node.js and npm installed for local development
+* Vite and TypeScript for building and compiling the game
+* React for creating interactive game components
+* shadcn-ui and Tailwind CSS for styling and layout
 
-Changes made via Lovable will be committed automatically to this repo.
+## Getting Started
 
-**Use your preferred IDE**
+To start playing the game, simply open the project in your preferred IDE and run `yarn` then `yarn start`. This will launch the game in your default web browser.
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+## Contributing
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+If you'd like to contribute to the project, please fork the repository and submit a pull request with your changes. We welcome feedback and suggestions for new features and game modes.
 
-Follow these steps:
+## New Content
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+* Added new level designs with increased difficulty
+* Implemented a scoring system to track player progress
+* Improved game performance and responsiveness
+* Fixed bugs and issues reported by players
+* Added support for touchscreen inputs on mobile devices
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
 
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
-```
-
-**Edit a file directly in GitHub**
-
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
-
-**Use GitHub Codespaces**
-
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
-
-## What technologies are used for this project?
-
-This project is built with .
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/7090467c-7254-4ab6-a833-46961a48163c) and click on Share -> Publish.
-
-## I want to use a custom domain - is that possible?
-
-We don't support custom domains (yet). If you want to deploy your project under your own domain then we recommend using Netlify. Visit our docs for more details: [Custom domains](https://docs.lovable.dev/tips-tricks/custom-domain/)
+## Project Bootstrap
+This project was bootstrapped with Lovable.dev

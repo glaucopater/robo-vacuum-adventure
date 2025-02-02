@@ -33,14 +33,14 @@ export const GameCell = ({
       key={`${x}-${y}`}
       className={`
         aspect-square relative border border-gray-200
-        ${isObstacle ? 'bg-gray-400' : 'bg-gray-100'}
-        ${isDirt ? 'bg-brown-500 dirt' : ''} 
-        ${isSun ? 'bg-yellow-100' : ''}
+        ${isObstacle ? "bg-gray-400" : "bg-gray-100"}
+        ${isDirt ? "bg-brown-500 dirt" : ""} 
+        ${isSun ? "bg-yellow-100" : ""}
       `}
       style={{
-        background: isDirt ? '#8B4513' : pathStyle, // Make dirt more visible
+        background: isDirt ? "#8B4513" : pathStyle, // Make dirt more visible
         width: `${tileSize}px`,
-        height: `${tileSize}px`
+        height: `${tileSize}px`,
       }}
     >
       {isRobot && (
@@ -50,8 +50,8 @@ export const GameCell = ({
       )}
       {showPanorama && panoramaImage && (
         <div className="absolute inset-0 bg-black bg-opacity-50 transition-all duration-500">
-          <img 
-            src={`https://source.unsplash.com/${panoramaImage}`}
+          <img
+            src={`https://images.unsplash.com/${panoramaImage}?w=1920&h=1080&fit=crop&auto=format`}
             alt="Level completion panorama"
             className="w-full h-full object-cover opacity-50"
           />
