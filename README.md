@@ -1,8 +1,15 @@
 # Robo-Vacuum Adventure
 
+
+[![Netlify Status](https://api.netlify.com/api/v1/badges/ea9084c0-aaef-4b05-97df-48647ae74f64/deploy-status)](https://app.netlify.com/sites/robo-vacuum-adventure/deploys)
+
+[![Live Demo](https://robo-vacuum-adventure.netlify.app/)](https://robo-vacuum-adventure.netlify.app/)
+
+
 ## Project Purpose
 
 This project aims to create a interactive game where a robot vacuum cleaner navigates through a virtual environment, avoiding obstacles and collecting virtual dust particles. The game will be built using React, TypeScript, and Vite, with a focus on creating a engaging and challenging user experience.
+
 
 ## Game Overview
 
